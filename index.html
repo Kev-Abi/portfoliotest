@@ -22,7 +22,7 @@ body {
     padding: 20px;
 }
 
-img {
+img, video {
     width: 100%;
     border-radius: 15px;
     margin: 20px 0;
@@ -52,6 +52,10 @@ button:hover {
     transform: scale(1.1);
 }
 
+button:active {
+    transform: scale(0.95);
+}
+
 .hidden {
     display: none;
 }
@@ -64,48 +68,63 @@ button:hover {
     text-align: left;
     line-height: 1.6;
     margin-top: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO FILE -->
 <audio id="bgMusic">
     <source src="beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
 </audio>
 
 <!-- PAGE 1 -->
 <div class="container" id="page1">
-    <h1>Are you my babi? </h1>
-    <img src="1.png" alt="Page 1 Image">
-
-    <button class="yes" onclick="goToPage2()">Yes </button>
-    <button class="no" onclick="goToReject()">No </button>
+    <h1>Are you my babi?</h1>
+    <img src="1.png">
+    <button class="yes" onclick="showPage('page2')">Yes</button>
+    <button class="no" onclick="showPage('rejectPage')">No</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="container hidden" id="page2">
-    <h1>Are you sureeee? </h1>
-    <img src="3.png" alt="Sure Image">
-
-    <button class="yes" onclick="goToFinal()">YESSSS </button>
-    <button class="no" onclick="goToReject()">No </button>
+    <h1>Are you sureeee?</h1>
+    <img src="3.png">
+    <button class="yes" onclick="goToCamera()">YESSSS</button>
+    <button class="no" onclick="showPage('rejectPage')">No</button>
 </div>
 
-<!-- REJECTION PAGE -->
+<!-- CAMERA PAGE -->
+<div class="container hidden" id="cameraPage">
+    <h1>Let me see if it’s really my babi 🤨📸</h1>
+    <video id="video" autoplay playsinline></video>
+    <br>
+    <button class="yes" onclick="takePhoto()">Take Photo</button>
+    <button class="no" onclick="goToFinal()">Skip</button>
+    <canvas id="canvas" class="hidden"></canvas>
+</div>
+
+<!-- CONFIRMATION PAGE -->
+<div class="container hidden" id="confirmPage">
+    <h1>Yayyy it’s really you!!! 🥹🤍</h1>
+    <img id="confirmPhoto">
+    <br>
+    <button class="yes" onclick="goToFinal()">Continue 💌</button>
+</div>
+
+<!-- REJECT PAGE -->
 <div class="container hidden" id="rejectPage">
     <h1>edi bat ka nandito? alis!</h1>
-    <img src="2.png" alt="Reject Image">
-
-    <button class="yes" onclick="goBack()">Go Back</button>
+    <img src="2.png">
+    <button class="yes" onclick="showPage('page1')">Go Back</button>
 </div>
 
 <!-- FINAL PAGE -->
 <div class="container hidden" id="finalPage">
     <h1>Happy Valentine’s Day My Babi ❤️</h1>
     <img src="4.png" alt="Bouquet of my babi">
-
     <div class="message-box">
         First of all, I’m sorry I don’t have flowers that I can give you today. If I could, I would give you the biggest bouquet in the world, but since I can’t, I thought maybe I could give you virtual flowers instead hehehe. Honestly, even if I gave you real flowers, they would fade, so I wanted to give you something that would last longer and mean more. You’re the most beautiful girl I have, and the most beautiful thing that ever happened to me is us. That’s why I turned us into a bouquet (okay fine mostly ikaw yung nasa pictures kasi ikaw naman talaga yung pinaka maganda and pinaka special part hehehe). Every picture reminds me how lucky I am that out of everyone in this world.
         <br><br>
@@ -120,37 +139,61 @@ button:hover {
 <script>
 
 const music = document.getElementById("bgMusic");
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
 
 function hideAll() {
     document.getElementById("page1").classList.add("hidden");
     document.getElementById("page2").classList.add("hidden");
+    document.getElementById("cameraPage").classList.add("hidden");
+    document.getElementById("confirmPage").classList.add("hidden");
     document.getElementById("rejectPage").classList.add("hidden");
     document.getElementById("finalPage").classList.add("hidden");
 }
 
-function goToPage2() {
+function showPage(id) {
     hideAll();
-    document.getElementById("page2").classList.remove("hidden");
+    document.getElementById(id).classList.remove("hidden");
 }
 
-function goToReject() {
-    hideAll();
-    document.getElementById("rejectPage").classList.remove("hidden");
+function goToCamera() {
+    showPage("cameraPage");
+
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(() => {
+            alert("Camera not supported or permission denied.");
+            goToFinal();
+        });
 }
 
-function goBack() {
+function takePhoto() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0);
+
+    const imageData = canvas.toDataURL("image/png");
+
+    if (video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
+    }
+
     hideAll();
-    document.getElementById("page1").classList.remove("hidden");
+    document.getElementById("confirmPage").classList.remove("hidden");
+    document.getElementById("confirmPhoto").src = imageData;
 }
 
 function goToFinal() {
     hideAll();
     document.getElementById("finalPage").classList.remove("hidden");
-    music.play();
+    music.play().catch(() => {});
 }
 
 </script>
 
 </body>
 </html>
-
