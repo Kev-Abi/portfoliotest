@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Babi 💌</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #bad4ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 600px;
+    padding: 20px;
+}
+
+img {
+    width: 100%;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.yes {
+    background-color: #ff4b5c;
+    color: white;
+}
+
+.no {
+    background-color: white;
+    color: #ff4b5c;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none;
+}
+
+.message-box {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO FILE -->
+<audio id="bgMusic">
+    <source src="beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="container" id="page1">
+    <h1>Are you my babi? </h1>
+    <img src="1.png" alt="Page 1 Image">
+
+    <button class="yes" onclick="goToPage2()">Yes </button>
+    <button class="no" onclick="goToReject()">No </button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="container hidden" id="page2">
+    <h1>Are you sureeee? </h1>
+    <img src="3.png" alt="Sure Image">
+
+    <button class="yes" onclick="goToFinal()">YESSSS </button>
+    <button class="no" onclick="goToReject()">No </button>
+</div>
+
+<!-- REJECTION PAGE -->
+<div class="container hidden" id="rejectPage">
+    <h1>edi bat ka nandito? alis!</h1>
+    <img src="2.png" alt="Reject Image">
+
+    <button class="yes" onclick="goBack()">Go Back</button>
+</div>
+
+<!-- FINAL PAGE -->
+<div class="container hidden" id="finalPage">
+    <h1>Happy Valentine’s Day My Babi ❤️</h1>
+    <img src="4.png" alt="Bouquet of my babi">
+
+    <div class="message-box">
+        First of all, I’m sorry I don’t have flowers that I can give you today. If I could, I would give you the biggest bouquet in the world, but since I can’t, I thought maybe I could give you virtual flowers instead hehehe. Honestly, even if I gave you real flowers, they would fade, so I wanted to give you something that would last longer and mean more. You’re the most beautiful girl I have, and the most beautiful thing that ever happened to me is us. That’s why I turned us into a bouquet (okay fine mostly ikaw yung nasa pictures kasi ikaw naman talaga yung pinaka maganda and pinaka special part hehehe). Every picture reminds me how lucky I am that out of everyone in this world.
+        <br><br>
+        Now for my real message, babi I love you so so so much. As in sobra. We fight sometimes and we misunderstand each other, may tampuhan, may selos (ata), may pagod, but what I love about us is that we always find our way back to each other. We don’t give up. We choose to fix things. We choose to understand. Thank you for always being there for me. Thank you for staying even when things are not perfect. Thank you for choosing me not just when it’s easy but even when it’s hard. I really appreciate you more than you know. I’m also sorry na matagal tayong hindi magkasama umuwi because of my competition and I know that time was limited, but I’m really thankful na tapos na and we can finally go back to our usual moments. I missed going home with you, talking about random things, cough poundtown cough, laughing about small jokes, and just feeling calm because you’re beside me. Those simple moments mean so much to me. I always look forward to going home with you because that’s when I feel the most peaceful and happiest.
+        <br><br>
+        Hanggang ngayon, I still find it funny na nag start tayo sa biruang tawag na “love” 😭 Tanda ko pa iniwas iwasan ko pa sagutin yung tanong kung ano ba tayo that time DAWHBAWDAWDJAJDWDSA pero now I can proudly say na mag boyfriend and girlfriend tayo na nagmamahal nang sobra at walang makakatanggal o makakapag iba ng pagmamahalan natin sa isa't isa. BAWAL MAGHIWALAY!!! Papagalitan tayo ni tito BDKHWABHKDAKHWDKHA. Kidding aside, mahal na mahal na mahal kita, babi ko🤍
+        <br><br>
+        I know I’m not perfect and I know I still have a lot to improve, but I promise I will keep choosing you every single day. I promise to love you better and not just say it. I promise to grow with you and protect what we have. Bawal maghiwalay talaga. Hindi tayo papayag. I’m serious about you and about us. Happy Valentine’s Day my babi. Thank you for loving me the way you do. Thank you for being patient with me and for making my world brighter just by being in it. Ikaw na talaga and as long as you’ll have me, I’m yours. I love you so much babi, always and forever. 🤍
+    </div>
+</div>
+
+<script>
+
+const music = document.getElementById("bgMusic");
+
+function hideAll() {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("rejectPage").classList.add("hidden");
+    document.getElementById("finalPage").classList.add("hidden");
+}
+
+function goToPage2() {
+    hideAll();
+    document.getElementById("page2").classList.remove("hidden");
+}
+
+function goToReject() {
+    hideAll();
+    document.getElementById("rejectPage").classList.remove("hidden");
+}
+
+function goBack() {
+    hideAll();
+    document.getElementById("page1").classList.remove("hidden");
+}
+
+function goToFinal() {
+    hideAll();
+    document.getElementById("finalPage").classList.remove("hidden");
+    music.play();
+}
+
+</script>
+
+</body>
+</html>
